@@ -1,6 +1,7 @@
 package com.amgems.consort.consort;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,14 +19,17 @@ public class SessionsFragment extends Fragment {
     private RecyclerView mSessionsRecyclerView;
     private SessionsAdapter mAdapter;
 
+    private String mUsername;
+
     // Visible default constructor to make Fragment happy
     public SessionsFragment() {
     }
 
-    public static Fragment newInstance(ArrayList<Integer> sessionIds) {
+    public static Fragment newInstance(ArrayList<Integer> sessionIds, String username) {
         SessionsFragment fragment = new SessionsFragment();
         Bundle args = new Bundle();
         args.putIntegerArrayList(MainMenuActivity.EXTRAS_SESSION_LIST, sessionIds);
+        args.putString(MainMenuActivity.EXTRAS_USERNAME, username);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,10 +49,20 @@ public class SessionsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         List<Integer> sessionIds = getArguments().getIntegerArrayList(MainMenuActivity.EXTRAS_SESSION_LIST);
+        mUsername = getArguments().getString(MainMenuActivity.EXTRAS_USERNAME);
         if (sessionIds == null) {
             throw new IllegalArgumentException("EXTRAS_SESSION_LIST cannot be null");
         }
         mAdapter = new SessionsAdapter(getResources(), sessionIds);
+        mAdapter.setOnItemClickListener(new SessionsAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Integer data, int pos) {
+                Intent activityIntent = new Intent(getActivity(), GameSessionActivity.class);
+                activityIntent.putExtra(GameSessionActivity.EXTRAS_USER, mUsername);
+                activityIntent.putExtra(GameSessionActivity.EXTRAS_SESSION_ID, data);
+                startActivity(activityIntent);
+            }
+        });
 
         mSessionsRecyclerView.setAdapter(mAdapter);
     }

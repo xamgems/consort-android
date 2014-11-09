@@ -19,7 +19,9 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
     private final List<Integer> mSessionIds;
     private final Resources mResources;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private OnItemClickListener mItemClickListener;
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CardView mTitleCard;
         private TextView mTitleTextView;
 
@@ -27,7 +29,17 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
             super(cardView);
             mTitleCard = cardView;
             mTitleTextView = (TextView) cardView.findViewById(R.id.title_textview);
+            mTitleCard.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            mItemClickListener.onClick(mSessionIds.get(getPosition()), getPosition());
+        }
+    }
+
+    public static interface OnItemClickListener {
+        public void onClick(Integer data, int pos);
     }
 
     public SessionsAdapter(Resources resources, List<Integer> sessionIds) {
@@ -40,6 +52,10 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ViewHo
         CardView card = (CardView) LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_session, viewGroup, false);
         return new ViewHolder(card);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mItemClickListener = listener;
     }
 
     @Override
