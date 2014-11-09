@@ -26,9 +26,8 @@ public class GameSessionActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mSurfaceView = new GameSurfaceView(this);
-        setContentView(mSurfaceView);
+        setContentView(R.layout.activity_game_session);
+        mSurfaceView = (GameSurfaceView) findViewById(R.id.surface_view);
 
         mUsername = getIntent().getStringExtra(EXTRAS_USER);
         mSessionId = getIntent().getIntExtra(EXTRAS_SESSION_ID, -1);

@@ -31,6 +31,8 @@ public class Node {
     @SerializedName("Neighbors")
     private Set<Integer> neighbors;
 
+    @Expose
+    @SerializedName("Known")
     private boolean visible;
 
     public Node() {}

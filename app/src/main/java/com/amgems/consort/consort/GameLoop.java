@@ -1,6 +1,5 @@
 package com.amgems.consort.consort;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;

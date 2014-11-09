@@ -21,4 +21,8 @@
     <string name="title_activity_game_session">GameSessionActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- Game session related text -->
+    <string name="hint_guess">Guess a locked word</string>
+    <string name="ime_guess">Guess</string>
+
 </resources>

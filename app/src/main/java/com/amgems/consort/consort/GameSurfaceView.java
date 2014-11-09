@@ -1,6 +1,7 @@
 package com.amgems.consort.consort;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -13,6 +14,11 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public GameSurfaceView(Context context) {
         super(context);
+        getHolder().addCallback(this);
+    }
+
+    public GameSurfaceView(Context context, AttributeSet attrib) {
+        super(context, attrib);
         getHolder().addCallback(this);
     }
 

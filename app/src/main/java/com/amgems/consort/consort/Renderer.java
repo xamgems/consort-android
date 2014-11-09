@@ -35,12 +35,17 @@ public class Renderer {
             for (Node node : game.getMapping().graph) {
                 Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 textPaint.setTextSize(40);
-                int r = mRandom.nextInt(255);
-                int g = mRandom.nextInt(255);
-                int b = mRandom.nextInt(255);
-                textPaint.setColor(Color.rgb(r, g, b));
+                textPaint.setColor(Color.rgb(0, 0, 0));
 
-                canvas.drawText(node.getData(), node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
+                String nodeName;
+
+                if (node.isVisible()) {
+                    nodeName = node.getData();
+                } else {
+                    nodeName = node.getData().replaceAll("[a-zA-Z]", "*");
+                }
+
+                canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
                 for (Integer neighbour : node.getNeighbors()) {
                     // What the Jesus...
                     Node neighbourNode = game.getMapping().graph.fromString(game.getMapping().mappings.get(neighbour));
