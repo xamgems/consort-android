@@ -1,15 +1,21 @@
 package com.amgems.consort.consort;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amgems.consort.model.GameState;
+import com.amgems.consort.model.Graph;
 import com.amgems.consort.model.GraphMappings;
 import com.amgems.consort.model.Node;
+import com.amgems.consort.serve.GcmManager;
 import com.amgems.consort.serve.QueryService;
 
 import retrofit.Callback;
@@ -24,6 +30,7 @@ public class GameSessionActivity extends ActionBarActivity {
 
     private GameSurfaceView mSurfaceView;
     private EditText mGuessEditText;
+    private Graph mGraph;
 
     private String mUsername;
     private int mSessionId;
@@ -44,12 +51,21 @@ public class GameSessionActivity extends ActionBarActivity {
         }
 
         mSurfaceView.setRenderer(new Renderer());
+        GcmManager gcmManager = new GcmManager(this);
+        gcmManager.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String data = intent.getExtras().getString("data");
+                mGraph.check(data);
+            }
+        });
 
-        QueryService service = new QueryService();
+        final QueryService service = new QueryService();
         service.getGraph(mUsername, mSessionId, new Callback<GraphMappings>() {
             @Override
             public void success(final GraphMappings graphMappings, Response response) {
                 graphMappings.graph.initialize();
+                mGraph = graphMappings.graph;
                 mGuessEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
                     public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -60,6 +76,17 @@ public class GameSessionActivity extends ActionBarActivity {
                                 !graphMappings.graph.fromString(guess).isVisible()) {
                                 Node node = graphMappings.graph.fromString(guess);
                                 node.setVisible(true);
+                                service.updateState(mUsername, guess, new Callback<String>() {
+                                    @Override
+                                    public void success(String s, Response response) {
+                                       Log.d(getClass().getSimpleName(), "Success");
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        Log.d(getClass().getSimpleName(), "Failure: " + error.getMessage());
+                                    }
+                                });
                             }
                         }
                         return false;
