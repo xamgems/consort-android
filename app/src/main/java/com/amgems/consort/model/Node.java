@@ -3,6 +3,8 @@ package com.amgems.consort.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Set;
+
 /**
  * @author Sherman Pay.
  * @version 0.1, 11/8/14.
@@ -10,31 +12,35 @@ import com.google.gson.annotations.SerializedName;
 
 public class Node {
     @Expose
-    @SerializedName("data")
+    @SerializedName("Data")
     private String data;
 
     @Expose
-    @SerializedName("id")
+    @SerializedName("Id")
     private int id;
 
     @Expose
-    @SerializedName("x")
+    @SerializedName("X")
     private int x;
 
     @Expose
-    @SerializedName("x")
+    @SerializedName("Y")
     private int y;
+
+    @Expose
+    @SerializedName("Neighbors")
+    private Set<Node> neighbors;
 
     private boolean visible;
 
     public Node() {}
 
     public Node(String data) {
-        this(data, 0, 0, 0);
+        this(data, -1, -1, -1);
     }
 
     public Node(String data, int id) {
-        this(data, id, 0, 0);
+        this(data, id, -1, -1);
     }
 
     public Node(String data, int id, int x, int y) {
@@ -70,6 +76,13 @@ public class Node {
 
     public int getY() {
         return y;
+    }
+
+    /*
+     * Dangerous!
+     */
+    public Set<Node> getNeighbors() {
+        return this.neighbors;
     }
 
     @Override

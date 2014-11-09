@@ -39,7 +39,7 @@ public class QueryService {
         requestor.connectSession(user, callback);
     }
 
-    public void getGraph(int session, Callback<Graph> callback) {
-        requestor.getGraph(session, callback);
+    public void getGraph(String user, int session, Callback<Graph> callback) {
+        requestor.getGraph(user, session, callback);
     }
 }

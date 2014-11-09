@@ -12,15 +12,19 @@ import java.util.Set;
  */
 public class Graph {
     @Expose
-    @SerializedName("adj")
-    private Map<Node, Set<Node>> adjList;
+    @SerializedName("nodes")
+    private Set<Node> nodes;
 
     private Map<String, Node> stringNodeMap;
 
     public Graph() {
-        for (Node n : adjList.keySet()) {
+        for (Node n : nodes) {
            stringNodeMap.put(n.getData(), n);
         }
+    }
+
+    public Graph(Set<Node> nodes) {
+        this.nodes = nodes;
     }
 
     public Node check(String s) {
@@ -38,7 +42,7 @@ public class Graph {
     }
 
     public int size() {
-        return this.adjList.size();
+        return this.nodes.size();
     }
 
 }

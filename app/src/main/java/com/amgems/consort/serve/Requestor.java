@@ -19,6 +19,7 @@ public interface Requestor {
     void connectSession(@Field("user") String user, Callback<List<Integer>> callback);
 
     @FormUrlEncoded
-    @POST("/GraphServer")
-    void getGraph(@Field("session") int session, Callback<Graph> callback);
+    @POST("/GameServer")
+    void getGraph(@Field("user") String user, @Field("session") int session,
+    Callback<Graph> callback);
 }
