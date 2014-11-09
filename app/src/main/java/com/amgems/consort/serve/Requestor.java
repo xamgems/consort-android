@@ -17,10 +17,16 @@ import retrofit.http.POST;
 public interface Requestor {
     @FormUrlEncoded
     @POST("/SessionServer")
-    void connectSession(@Field("user") String user, Callback<List<Integer>> callback);
+    void connectSession(@Field("user") String user, @Field("regid") String
+            regId, Callback<List<Integer>> callback);
 
     @FormUrlEncoded
     @POST("/GameServer")
     void getGraph(@Field("user") String user, @Field("session") int session,
     Callback<GraphMappings> callback);
+
+    @FormUrlEncoded
+    @POST("/UpdateState")
+    void updateState(@Field("name") String user, @Field("data") String data,
+                     Callback<String> callback);
 }

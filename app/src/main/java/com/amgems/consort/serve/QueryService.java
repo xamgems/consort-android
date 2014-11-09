@@ -36,11 +36,15 @@ public class QueryService {
         requestor = restAdapter.create(Requestor.class);
     }
 
-    public void connectSession(String user, Callback<List<Integer>> callback) {
-        requestor.connectSession(user, callback);
+    public void connectSession(String user, String regId, Callback<List<Integer>> callback) {
+        requestor.connectSession(user, regId, callback);
     }
 
     public void getGraph(String user, int session, Callback<GraphMappings> callback) {
         requestor.getGraph(user, session, callback);
+    }
+
+    public void updateState(String user, String data, Callback<String> callback) {
+        requestor.updateState(user, data, callback);
     }
 }

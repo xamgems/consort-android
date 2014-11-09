@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amgems.consort.serve.GcmManager;
 import com.amgems.consort.serve.QueryService;
 
 import java.util.ArrayList;
@@ -31,12 +32,15 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         setUpViews();
 
+        GcmManager gcmManager = new GcmManager(this);
         final QueryService service = new QueryService();
+        final String regId = gcmManager.getRegistrationId();
 
         mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                service.connectSession(mUserEditText.getText().toString(), new Callback<List<Integer>>() {
+                service.connectSession(mUserEditText.getText().toString(),
+                        regId, new Callback<List<Integer>>() {
                     @Override
                     public void success(List<Integer> integers, Response response) {
                         Intent activityIntent = new Intent(LoginActivity.this, MainMenuActivity.class);

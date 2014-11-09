@@ -40,7 +40,7 @@ public class GcmManager {
             mRegId = getRegistrationId();
 
             if (mRegId.isEmpty()) {
-                registerInBackground();
+                registerInForeground();
             }
         }
     }
@@ -116,6 +116,18 @@ public class GcmManager {
                 return msg;
             }
         }.execute(null, null, null);
+    }
+
+    private void registerInForeground() {
+        try {
+            if (mGcm == null)  {
+                mGcm = GoogleCloudMessaging.getInstance(mContext);
+            }
+            mRegId = mGcm.register(SENDER_ID);
+            storeRegistrationId(mRegId);
+        } catch (IOException e) {
+            Log.d(TAG, "Error: " + e.getMessage());
+        }
     }
 
     /**
