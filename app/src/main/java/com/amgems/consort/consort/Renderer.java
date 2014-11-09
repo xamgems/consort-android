@@ -24,8 +24,8 @@ public class Renderer {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
 
-            float xScale = 1.0f * width / game.getMapping().width;
-            float yScale = 1.0f * height / game.getMapping().height;
+            float xScale = 2.0f * width / game.getMapping().width;
+            float yScale = 4.0f * height / game.getMapping().height;
 
             float x = game.getShiftX();
             float y = game.getShiftY();
@@ -49,6 +49,14 @@ public class Renderer {
                         nodeName = node.getData().replaceAll("[a-zA-Z]", "*");
                     }
 
+                    for (Integer neighbour : node.getNeighbors()) {
+                        // What the Jesus...
+                        Node neighbourNode = game.getMapping().graph.fromString(game.getMapping().mappings.get(neighbour));
+                        if (neighbourNode.isVisible()) {
+                            canvas.drawLine(node.getX(xScale) - x, node.getY(yScale) - y, neighbourNode.getX(xScale) - x, neighbourNode.getY(yScale) - y, textPaint);
+                        }
+                    }
+
                     float length = nodeName.length() * 15;
                     canvas.drawRect(node.getX(xScale) - length - x,
                             node.getY(yScale) - 40 - y,
@@ -57,13 +65,6 @@ public class Renderer {
                             circlePaint
                     );
                     canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
-                    for (Integer neighbour : node.getNeighbors()) {
-                        // What the Jesus...
-                        Node neighbourNode = game.getMapping().graph.fromString(game.getMapping().mappings.get(neighbour));
-                        if (neighbourNode.isVisible()) {
-                            canvas.drawLine(node.getX(xScale) - x, node.getY(yScale) - y, neighbourNode.getX(xScale) - x, neighbourNode.getY(yScale) - y, textPaint);
-                        }
-                    }
                 }
             }
             holder.unlockCanvasAndPost(canvas);
