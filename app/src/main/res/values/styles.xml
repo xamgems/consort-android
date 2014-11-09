@@ -2,8 +2,8 @@
 
     <!-- Main application theme. -->
     <style name="Theme.Main" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/light_blue</item>
-        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="colorPrimary">@color/amber</item>
+        <item name="colorPrimaryDark">@color/black</item>
     </style>
 
     <style name="TextViewTitleLight">
