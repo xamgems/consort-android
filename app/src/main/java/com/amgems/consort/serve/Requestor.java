@@ -14,6 +14,5 @@ import retrofit.http.POST;
 public interface Requestor {
     @FormUrlEncoded
     @POST("/SessionServer")
-    void connectSession(@Field("user") String user, @Field("sesssion") int session,
-                        Callback<List<Integer>> callback);
+    void connectSession(@Field("user") String user, Callback<List<Integer>> callback);
 }

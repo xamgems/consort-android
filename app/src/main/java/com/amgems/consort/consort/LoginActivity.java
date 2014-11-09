@@ -4,16 +4,57 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.amgems.consort.serve.QueryService;
+
+import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class LoginActivity extends Activity {
+
+    private EditText mUserEditText;
+    private Button mUserSubmitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        setUpViews();
+
+        QueryService.init();
+
+        mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                QueryService.connectSession(mUserEditText.getText().toString(), new Callback<List<Integer>>() {
+                    @Override
+                    public void success(List<Integer> integers, Response response) {
+                        Toast.makeText(LoginActivity.this, "Sogui lah " + integers.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError retrofitError) {
+                        Toast.makeText(LoginActivity.this, "Someone fucked up: " + retrofitError, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
+    }
+
+    public void setUpViews() {
+        mUserEditText = (EditText) findViewById(R.id.user_edittext);
+        mUserSubmitButton = (Button) findViewById(R.id.user_submit);
     }
 
     @Override

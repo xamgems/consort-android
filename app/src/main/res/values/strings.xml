@@ -15,5 +15,6 @@
     <!-- Strings relating to login activiy -->
     <string name="title_login">consort</string>
     <string name="hint_username">username</string>
+    <string name="button_submit">submit</string>
 
 </resources>

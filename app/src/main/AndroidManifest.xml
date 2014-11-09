@@ -4,6 +4,7 @@
     package="com.amgems.consort.consort" >
 
     <uses-sdk tools:node="replace" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"

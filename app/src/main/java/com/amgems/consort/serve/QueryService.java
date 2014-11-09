@@ -15,7 +15,7 @@ import retrofit.converter.GsonConverter;
  * @version 0.1, 11/8/14.
  */
 public class QueryService {
-    private static final String SERVER_URL = "attu.cs.washington.edu:33333";
+    private static final String SERVER_URL = "http://attu4.cs.washington.edu:33333";
     private static Requestor requestor;
 
     public static void init() {
@@ -30,7 +30,7 @@ public class QueryService {
         requestor = restAdapter.create(Requestor.class);
     }
 
-    public static void connectSession(String user, int session, Callback<List<Integer>> callback) {
-        requestor.connectSession(user, session, callback);
+    public static void connectSession(String user, Callback<List<Integer>> callback) {
+        requestor.connectSession(user, callback);
     }
 }
