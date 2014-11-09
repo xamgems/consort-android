@@ -55,7 +55,8 @@ public class LoginActivity extends ActionBarActivity {
 
                     @Override
                     public void failure(RetrofitError retrofitError) {
-                        Toast.makeText(LoginActivity.this, "Someone fucked up: " + retrofitError, Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Error: " + retrofitError,
+                                Toast.LENGTH_LONG).show();
                     }
                 });
             }

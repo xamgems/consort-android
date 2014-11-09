@@ -30,13 +30,16 @@ public class Renderer {
             float x = game.getShiftX();
             float y = game.getShiftY();
 
-            canvas.drawRGB(255, 255, 255);
+            canvas.drawRGB(0, 0, 0);
 
             for (Node node : game.getMapping().graph) {
                 if (node.isVisible()) {
                     Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    Paint circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    textPaint.setColor(Color.rgb(255, 255, 255));
                     textPaint.setTextSize(40);
                     textPaint.setColor(Color.rgb(0, 0, 0));
+                    circlePaint.setColor(Color.rgb(255, 152, 07));
 
                     String nodeName;
 
@@ -46,6 +49,13 @@ public class Renderer {
                         nodeName = node.getData().replaceAll("[a-zA-Z]", "*");
                     }
 
+                    float length = nodeName.length() * 15;
+                    canvas.drawRect(node.getX(xScale) - length - x,
+                            node.getY(yScale) - 40 - y,
+                            node.getX(xScale) + length * 2 - x,
+                            node.getY(yScale) + 10 - y,
+                            circlePaint
+                    );
                     canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
                     for (Integer neighbour : node.getNeighbors()) {
                         // What the Jesus...
