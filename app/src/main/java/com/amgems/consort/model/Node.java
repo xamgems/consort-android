@@ -3,6 +3,8 @@ package com.amgems.consort.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 /**
  * @author Sherman Pay.
  * @version 0.1, 11/8/14.
@@ -18,6 +20,8 @@ public class Node {
     private int id;
 
     private boolean visible;
+
+    public Node() {}
 
     public Node(String data) {
         this.data = data;
@@ -48,4 +52,18 @@ public class Node {
         this.visible = v;
     }
 
+    @Override
+    public String toString() {
+        return "Node: { id: " + id + " data: " + data + " vis: " + visible + " }";
+    }
+
+    @Override
+    public int hashCode() {
+        return (data + this.id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Node && this.id == ((Node)o).id;
+    }
 }
