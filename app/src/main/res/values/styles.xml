@@ -11,6 +11,12 @@
         <item name="android:textColor">@color/textWhite</item>
     </style>
 
+    <style name="TextViewRoomDark">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/textBlack</item>
+        <item name="android:paddingLeft">20dp</item>
+    </style>
+
     <style name="EditTextWhite">
         <item name="android:textSize">20sp</item>
 

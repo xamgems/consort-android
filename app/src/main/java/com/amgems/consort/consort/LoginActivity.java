@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.amgems.consort.serve.QueryService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -39,6 +40,8 @@ public class LoginActivity extends ActionBarActivity {
                     @Override
                     public void success(List<Integer> integers, Response response) {
                         Intent activityIntent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                        activityIntent.putExtra(MainMenuActivity.EXTRAS_SESSION_LIST,
+                                new ArrayList<Integer>(integers));
                         startActivity(activityIntent);
                     }
 

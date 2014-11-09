@@ -2,9 +2,9 @@ package com.amgems.consort.consort;
 
 import android.app.Activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -14,24 +14,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import java.util.ArrayList;
 
 public class MainMenuActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    public static final String EXTRAS_SESSION_LIST = "mSessionIds";
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+    private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
+
+    private ArrayList<Integer> mSessionIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSessionIds = getIntent().getIntegerArrayListExtra(EXTRAS_SESSION_LIST);
+
         setContentView(R.layout.activity_main_menu);
+
+        if (mSessionIds == null) {
+            throw new IllegalArgumentException("EXTRAS_SESSION_LIST cannot be null");
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -46,9 +50,9 @@ public class MainMenuActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, SessionsFragment.newInstance(mSessionIds))
                 .commit();
     }
 

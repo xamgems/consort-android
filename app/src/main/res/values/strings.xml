@@ -17,4 +17,7 @@
     <string name="hint_username">username</string>
     <string name="button_submit">submit</string>
 
+    <!-- Session fragment related strings -->
+    <string name="title_session_room">ROOM %1$s</string>
+
 </resources>
