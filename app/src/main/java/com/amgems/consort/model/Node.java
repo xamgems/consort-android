@@ -29,7 +29,7 @@ public class Node {
 
     @Expose
     @SerializedName("Neighbors")
-    private Set<Node> neighbors;
+    private Set<Integer> neighbors;
 
     private boolean visible;
 
@@ -78,10 +78,23 @@ public class Node {
         return y;
     }
 
+    public int getX(double scalingFactor) {
+        return (int) (x * scalingFactor);
+    }
+
+    public int getY(double scalingFactor) {
+        return (int) (y * scalingFactor);
+    }
+
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /*
      * Dangerous!
      */
-    public Set<Node> getNeighbors() {
+    public Set<Integer> getNeighbors() {
         return this.neighbors;
     }
 

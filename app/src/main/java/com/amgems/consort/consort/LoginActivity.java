@@ -31,17 +31,18 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         setUpViews();
 
-        QueryService.init();
+        final QueryService service = new QueryService();
 
         mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                QueryService.connectSession(mUserEditText.getText().toString(), new Callback<List<Integer>>() {
+                service.connectSession(mUserEditText.getText().toString(), new Callback<List<Integer>>() {
                     @Override
                     public void success(List<Integer> integers, Response response) {
                         Intent activityIntent = new Intent(LoginActivity.this, MainMenuActivity.class);
                         activityIntent.putExtra(MainMenuActivity.EXTRAS_SESSION_LIST,
                                 new ArrayList<Integer>(integers));
+                        activityIntent.putExtra(MainMenuActivity.EXTRAS_USERNAME, mUserEditText.getText().toString());
                         startActivity(activityIntent);
                     }
 

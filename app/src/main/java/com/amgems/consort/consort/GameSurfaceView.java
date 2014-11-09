@@ -8,25 +8,35 @@ import com.amgems.consort.model.GameState;
 
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 
-    GameLoop mGameLoop;
+    private GameLoop mGameLoop;
+    private Renderer mRenderer;
 
     public GameSurfaceView(Context context) {
         super(context);
         getHolder().addCallback(this);
     }
 
-    public void startRenderer(Renderer renderer) {
-        mGameLoop = new GameLoop(getHolder(), renderer, new GameState());
+    public void setRenderer(Renderer renderer) {
+        mRenderer = renderer;
+        mGameLoop = new GameLoop(getHolder(), mRenderer);
+    }
+
+    public void start(GameState initialState) {
+        mGameLoop.setGameState(initialState);
+        mGameLoop.start();
+    }
+
+    public void stop() {
+        mGameLoop.setRunning(false);
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         mGameLoop.setRunning(true);
-        mGameLoop.start();
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i2, int i3) {
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
     }
 
     @Override
@@ -40,4 +50,5 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             }
         }
     }
+
 }

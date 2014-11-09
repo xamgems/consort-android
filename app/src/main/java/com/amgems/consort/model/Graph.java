@@ -3,6 +3,7 @@ package com.amgems.consort.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,19 +14,23 @@ import java.util.Set;
  */
 public class Graph implements Iterable<Node> {
     @Expose
-    @SerializedName("nodes")
+    @SerializedName("Nodes")
     private Set<Node> nodes;
 
     private Map<String, Node> stringNodeMap;
 
     public Graph() {
-        for (Node n : nodes) {
-           stringNodeMap.put(n.getData(), n);
-        }
     }
 
     public Graph(Set<Node> nodes) {
         this.nodes = nodes;
+    }
+
+    public void initialize() {
+        stringNodeMap = new HashMap<String, Node>();
+        for (Node n : nodes) {
+            stringNodeMap.put(n.getData(), n);
+        }
     }
 
     public Node check(String s) {
@@ -40,6 +45,10 @@ public class Graph implements Iterable<Node> {
 
     public boolean containsString(String s) {
         return stringNodeMap.keySet().contains(s);
+    }
+
+    public Node fromString(String s) {
+        return stringNodeMap.get(s);
     }
 
     public int size() {

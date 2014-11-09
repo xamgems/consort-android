@@ -10,20 +10,26 @@ public class GameLoop extends Thread {
 
     private final SurfaceHolder mHolder;
     private final Renderer mRenderer;
-    private final GameState mGameState;
+    private GameState mGameState;
 
-    public GameLoop(SurfaceHolder holder, Renderer renderer, GameState game) {
+    public GameLoop(SurfaceHolder holder, Renderer renderer) {
         mIsRunning = false;
 
         mHolder = holder;
         mRenderer = renderer;
+    }
+
+    public void setGameState(GameState game) {
         mGameState = game;
     }
 
     @Override
     public void run() {
         while (mIsRunning) {
-            // update mGameState
+            // Updates to game state are made
+            mGameState.mShiftX += 1;
+            mGameState.mShiftY += 1;
+
             mRenderer.onDrawFrame(mHolder, mGameState);
         }
     }
