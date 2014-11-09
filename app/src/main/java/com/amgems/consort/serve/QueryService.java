@@ -15,22 +15,26 @@ import retrofit.converter.GsonConverter;
  * @version 0.1, 11/8/14.
  */
 public class QueryService {
-    private static final String SERVER_URL = "http://attu4.cs.washington.edu:33333";
+    private static final String DEFAULT_SERVER_URL = "http://attu4.cs.washington.edu:33333";
     private static Requestor requestor;
 
-    public static void init() {
+    public QueryService() {
+        this(DEFAULT_SERVER_URL);
+    }
+
+    public QueryService(String serverUrl) {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(SERVER_URL)
+                .setEndpoint(serverUrl)
                 .setConverter(new GsonConverter(gson))
                 .build();
         requestor = restAdapter.create(Requestor.class);
     }
 
-    public static void connectSession(String user, Callback<List<Integer>> callback) {
+    public void connectSession(String user, Callback<List<Integer>> callback) {
         requestor.connectSession(user, callback);
     }
 }
