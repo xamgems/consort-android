@@ -2,7 +2,7 @@
 
     <!-- Main application theme. -->
     <style name="Theme.Main" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/amber</item>
+        <item name="colorPrimary">@color/orange</item>
         <item name="colorPrimaryDark">@color/black</item>
     </style>
 
