@@ -30,7 +30,7 @@ public class Renderer {
             float x = game.getShiftX();
             float y = game.getShiftY();
 
-            canvas.drawRGB(0, 0, 0);
+            canvas.drawRGB(66, 66, 66);
 
             for (Node node : game.getMapping().graph) {
                 Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
