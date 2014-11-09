@@ -1,6 +1,7 @@
 package com.amgems.consort.consort;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,6 +50,13 @@ public class SessionsFragment extends Fragment {
             throw new IllegalArgumentException("EXTRAS_SESSION_LIST cannot be null");
         }
         mAdapter = new SessionsAdapter(getResources(), sessionIds);
+        mAdapter.setOnItemClickListener(new SessionsAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Integer data, int pos) {
+                Intent activityIntent = new Intent(getActivity(), GameSessionActivity.class);
+                startActivity(activityIntent);
+            }
+        });
 
         mSessionsRecyclerView.setAdapter(mAdapter);
     }
