@@ -1,6 +1,7 @@
 package com.amgems.consort.serve;
 
 import com.amgems.consort.model.Graph;
+import com.amgems.consort.model.GraphMappings;
 
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface Requestor {
     @FormUrlEncoded
     @POST("/GameServer")
     void getGraph(@Field("user") String user, @Field("session") int session,
-    Callback<Graph> callback);
+    Callback<GraphMappings> callback);
 }

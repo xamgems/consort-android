@@ -1,6 +1,7 @@
 package com.amgems.consort.serve;
 
 import com.amgems.consort.model.Graph;
+import com.amgems.consort.model.GraphMappings;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,7 +40,7 @@ public class QueryService {
         requestor.connectSession(user, callback);
     }
 
-    public void getGraph(String user, int session, Callback<Graph> callback) {
+    public void getGraph(String user, int session, Callback<GraphMappings> callback) {
         requestor.getGraph(user, session, callback);
     }
 }
