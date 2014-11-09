@@ -1,8 +1,10 @@
 package com.amgems.consort.consort;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,7 @@ public class LoginActivity extends ActionBarActivity {
         GcmManager gcmManager = new GcmManager(this);
         final QueryService service = new QueryService();
         final String regId = gcmManager.getRegistrationId();
+        Log.d(getClass().getSimpleName(), "RegId: " + regId);
 
         mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override

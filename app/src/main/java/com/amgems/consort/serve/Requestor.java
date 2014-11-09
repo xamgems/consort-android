@@ -27,6 +27,6 @@ public interface Requestor {
 
     @FormUrlEncoded
     @POST("/UpdateState")
-    void updateState(@Field("name") String user, @Field("data") String data,
+    void updateState(@Field("user") String user, @Field("data") String data,
                      Callback<String> callback);
 }

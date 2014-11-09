@@ -40,7 +40,7 @@ public class GcmManager {
             mRegId = getRegistrationId();
 
             if (mRegId.isEmpty()) {
-                registerInForeground();
+                registerInBackground();
             }
         }
     }
@@ -150,7 +150,7 @@ public class GcmManager {
         final SharedPreferences prefs = getGCMPreferences(mContext);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
-        editor.commit();
+        editor.apply();
     }
 
     public void registerReceiver(BroadcastReceiver receiver) {
