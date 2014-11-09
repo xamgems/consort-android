@@ -65,6 +65,17 @@ public class GameSessionActivity extends ActionBarActivity {
             @Override
             public void success(final GraphMappings graphMappings, Response response) {
                 graphMappings.graph.initialize();
+
+                for (Node n : graphMappings.graph) {
+                    if (n.isDiscovered()) {
+                        n.setVisible(true);
+                        for (Integer neigh : n.getNeighbors()) {
+                            Node neighNode = graphMappings.graph.fromString(graphMappings.mappings.get(neigh));
+                            neighNode.setVisible(true);
+                        }
+                    }
+                }
+
                 mGraph = graphMappings.graph;
                 mGuessEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                     @Override
@@ -73,13 +84,19 @@ public class GameSessionActivity extends ActionBarActivity {
                             Toast.makeText(GameSessionActivity.this, "You made a guess!", Toast.LENGTH_SHORT).show();
                             String guess = mGuessEditText.getText().toString();
                             if (graphMappings.graph.containsString(guess) &&
-                                !graphMappings.graph.fromString(guess).isVisible()) {
+                                !graphMappings.graph.fromString(guess).isDiscovered() &&
+                                    graphMappings.graph.fromString(guess).isVisible()) {
                                 Node node = graphMappings.graph.fromString(guess);
-                                node.setVisible(true);
+                                node.setDiscovered(true);
+
+                                for (Integer neigh : node.getNeighbors()) {
+                                    Node neighNode = graphMappings.graph.fromString(graphMappings.mappings.get(neigh));
+                                    neighNode.setVisible(true);
+                                }
                                 service.updateState(mUsername, guess, new Callback<String>() {
                                     @Override
                                     public void success(String s, Response response) {
-                                       Log.d(getClass().getSimpleName(), "Success");
+                                        Log.d(getClass().getSimpleName(), "Success");
                                     }
 
                                     @Override

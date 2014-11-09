@@ -33,23 +33,27 @@ public class Renderer {
             canvas.drawRGB(255, 255, 255);
 
             for (Node node : game.getMapping().graph) {
-                Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                textPaint.setTextSize(40);
-                textPaint.setColor(Color.rgb(0, 0, 0));
-
-                String nodeName;
-
                 if (node.isVisible()) {
-                    nodeName = node.getData();
-                } else {
-                    nodeName = node.getData().replaceAll("[a-zA-Z]", "*");
-                }
+                    Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                    textPaint.setTextSize(40);
+                    textPaint.setColor(Color.rgb(0, 0, 0));
 
-                canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
-                for (Integer neighbour : node.getNeighbors()) {
-                    // What the Jesus...
-                    Node neighbourNode = game.getMapping().graph.fromString(game.getMapping().mappings.get(neighbour));
-                    canvas.drawLine(node.getX(xScale) - x, node.getY(yScale) - y, neighbourNode.getX(xScale) - x, neighbourNode.getY(yScale) - y, textPaint);
+                    String nodeName;
+
+                    if (node.isDiscovered()) {
+                        nodeName = node.getData();
+                    } else {
+                        nodeName = node.getData().replaceAll("[a-zA-Z]", "*");
+                    }
+
+                    canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
+                    for (Integer neighbour : node.getNeighbors()) {
+                        // What the Jesus...
+                        Node neighbourNode = game.getMapping().graph.fromString(game.getMapping().mappings.get(neighbour));
+                        if (neighbourNode.isVisible()) {
+                            canvas.drawLine(node.getX(xScale) - x, node.getY(yScale) - y, neighbourNode.getX(xScale) - x, neighbourNode.getY(yScale) - y, textPaint);
+                        }
+                    }
                 }
             }
             holder.unlockCanvasAndPost(canvas);

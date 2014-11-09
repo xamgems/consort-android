@@ -33,7 +33,9 @@ public class Node {
 
     @Expose
     @SerializedName("Known")
-    private boolean visible;
+    private boolean discovered;
+
+    private boolean isVisible;
 
     public Node() {}
 
@@ -64,12 +66,20 @@ public class Node {
         return this.id;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public boolean isDiscovered() {
+        return discovered;
     }
 
-    public void setVisible(boolean v) {
-        this.visible = v;
+    public void setDiscovered(boolean v) {
+        this.discovered = v;
+    }
+
+    public void setVisible(boolean visible) {
+        this.isVisible = visible;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
     }
 
     public float getX() {
@@ -102,7 +112,7 @@ public class Node {
 
     @Override
     public String toString() {
-        return "Node: { id: " + id + " data: " + data + " vis: " + visible +
+        return "Node: { id: " + id + " data: " + data + " vis: " + discovered +
                 "\n\tpos: (" + x + ", " + y + ") }";
     }
 

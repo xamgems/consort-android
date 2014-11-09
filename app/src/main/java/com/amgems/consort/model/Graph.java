@@ -36,7 +36,7 @@ public class Graph implements Iterable<Node> {
     public Node check(String s) {
        if (containsString(s)) {
            Node n = stringNodeMap.get(s);
-           n.setVisible(true);
+           n.setDiscovered(true);
            return n;
        } else {
            return null;
