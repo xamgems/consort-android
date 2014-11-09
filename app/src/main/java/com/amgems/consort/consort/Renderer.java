@@ -12,9 +12,6 @@ import java.util.Random;
 
 public class Renderer {
 
-    private static final int MAX_WIDTH = 100;
-    private static final int MAX_HEIGHT = 100;
-
     private final Random mRandom;
 
     public Renderer() {
@@ -27,11 +24,11 @@ public class Renderer {
             int width = canvas.getWidth();
             int height = canvas.getHeight();
 
-            double xScale = 1.0 * width / MAX_WIDTH;
-            double yScale = 1.0 * height / MAX_HEIGHT;
+            float xScale = 1.0f * width / game.getMapping().width;
+            float yScale = 1.0f * height / game.getMapping().height;
 
-            int x = game.mShiftX;
-            int y = game.mShiftY;
+            float x = game.getShiftX();
+            float y = game.getShiftY();
 
             canvas.drawRGB(255, 255, 255);
 

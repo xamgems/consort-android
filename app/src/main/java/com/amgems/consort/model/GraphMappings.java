@@ -17,4 +17,12 @@ public class GraphMappings {
     @Expose
     @SerializedName("Mappings")
     public Map<Integer, String> mappings;
+
+    @Expose
+    @SerializedName("Width")
+    public float width;
+
+    @Expose
+    @SerializedName("Height")
+    public float height;
 }

@@ -23,10 +23,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
     public void start(GameState initialState) {
         mGameLoop.setGameState(initialState);
+        setOnTouchListener(mGameLoop);
         mGameLoop.start();
     }
 
     public void stop() {
+        setOnTouchListener(null);
         mGameLoop.setRunning(false);
     }
 

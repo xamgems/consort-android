@@ -21,11 +21,11 @@ public class Node {
 
     @Expose
     @SerializedName("X")
-    private int x;
+    private float x;
 
     @Expose
     @SerializedName("Y")
-    private int y;
+    private float y;
 
     @Expose
     @SerializedName("Neighbors")
@@ -70,20 +70,20 @@ public class Node {
         this.visible = v;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public int getX(double scalingFactor) {
-        return (int) (x * scalingFactor);
+    public float getX(float scalingFactor) {
+        return x * scalingFactor;
     }
 
-    public int getY(double scalingFactor) {
-        return (int) (y * scalingFactor);
+    public float getY(float scalingFactor) {
+        return y * scalingFactor;
     }
 
     public void setXY(int x, int y) {
