@@ -1,11 +1,11 @@
 package com.amgems.consort.consort;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,7 +19,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends ActionBarActivity {
 
     private EditText mUserEditText;
     private Button mUserSubmitButton;
@@ -27,7 +27,6 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         setUpViews();
 
@@ -39,7 +38,8 @@ public class LoginActivity extends Activity {
                 QueryService.connectSession(mUserEditText.getText().toString(), new Callback<List<Integer>>() {
                     @Override
                     public void success(List<Integer> integers, Response response) {
-                        Toast.makeText(LoginActivity.this, "Sogui lah " + integers.toString(), Toast.LENGTH_SHORT).show();
+                        Intent activityIntent = new Intent(LoginActivity.this, MainMenuActivity.class);
+                        startActivity(activityIntent);
                     }
 
                     @Override
