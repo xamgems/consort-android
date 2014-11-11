@@ -1,6 +1,6 @@
 package com.amgems.consort.serve;
 
-import com.amgems.consort.model.Graph;
+import com.amgems.consort.consort.BuildConfig;
 import com.amgems.consort.model.GraphMappings;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -17,11 +17,10 @@ import retrofit.converter.GsonConverter;
  * @version 0.1, 11/8/14.
  */
 public class QueryService {
-    private static final String DEFAULT_SERVER_URL = "http://192.168.8.145:33333";
     private static Requestor requestor;
 
     public QueryService() {
-        this(DEFAULT_SERVER_URL);
+        this(BuildConfig.SERVER_URL);
     }
 
     public QueryService(String serverUrl) {
