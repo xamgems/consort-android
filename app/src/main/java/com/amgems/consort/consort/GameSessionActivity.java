@@ -1,12 +1,15 @@
 package com.amgems.consort.consort;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,10 +87,13 @@ public class GameSessionActivity extends ActionBarActivity {
                             Toast.makeText(GameSessionActivity.this, "You made a guess!", Toast.LENGTH_SHORT).show();
                             String guess = mGuessEditText.getText().toString();
                             if (graphMappings.graph.containsString(guess) &&
-                                !graphMappings.graph.fromString(guess).isDiscovered() &&
+                                    !graphMappings.graph.fromString(guess).isDiscovered() &&
                                     graphMappings.graph.fromString(guess).isVisible()) {
+
                                 Node node = graphMappings.graph.fromString(guess);
                                 node.setDiscovered(true);
+
+                                animateTo(getResources().getColor(R.color.light_green));
 
                                 for (Integer neigh : node.getNeighbors()) {
                                     Node neighNode = graphMappings.graph.fromString(graphMappings.mappings.get(neigh));
@@ -104,6 +110,8 @@ public class GameSessionActivity extends ActionBarActivity {
                                         Log.d(getClass().getSimpleName(), "Failure: " + error.getMessage());
                                     }
                                 });
+                            } else {
+                                animateTo(getResources().getColor(R.color.red));
                             }
                         }
                         return false;
@@ -117,6 +125,23 @@ public class GameSessionActivity extends ActionBarActivity {
                 Toast.makeText(GameSessionActivity.this, "Someone fucked up: " + error, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void animateTo(int endColor) {
+        ValueAnimator animator = ValueAnimator.ofInt(getResources().getColor(R.color.offwhite), endColor);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.setRepeatCount(1);
+        animator.setDuration(600);
+        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int newColor = (Integer) valueAnimator.getAnimatedValue();
+                mGuessEditText.setBackgroundColor(newColor);
+            }
+        });
+        animator.start();
     }
 
     @Override
