@@ -23,27 +23,37 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends ActionBarActivity  {
 
     private EditText mUserEditText;
     private Button mUserSubmitButton;
+
+    private String mRegId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpViews();
+        mUserSubmitButton.setClickable(false);
 
         GcmManager gcmManager = new GcmManager(this);
+        gcmManager.registerInBackground(new GcmRegistrationReceiver() {
+            @Override
+            public void receivedRegistrationId(String id) {
+                mRegId = id;
+                mUserEditText.setClickable(true);
+                mUserEditText.setVisibility(View.VISIBLE);
+            }
+        });
         final QueryService service = new QueryService();
-        final String regId = gcmManager.getRegistrationId();
-        Log.d(getClass().getSimpleName(), "RegId: " + regId);
+        Log.d(getClass().getSimpleName(), "RegId: " + mRegId);
 
         mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 service.connectSession(mUserEditText.getText().toString(),
-                        regId, new Callback<List<Integer>>() {
+                        mRegId, new Callback<List<Integer>>() {
                     @Override
                     public void success(List<Integer> integers, Response response) {
                         Intent activityIntent = new Intent(LoginActivity.this, MainMenuActivity.class);

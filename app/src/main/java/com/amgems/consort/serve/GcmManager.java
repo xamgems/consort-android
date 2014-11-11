@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.amgems.consort.consort.GcmRegistrationReceiver;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -34,14 +35,9 @@ public class GcmManager {
 
     public GcmManager(Activity activity) {
         mActivity = activity;
-        mContext = activity.getApplicationContext();
+        mContext = (activity).getApplicationContext();
         if (checkPlayServices()) {
             mGcm = GoogleCloudMessaging.getInstance(activity);
-            mRegId = getRegistrationId();
-
-            if (mRegId.isEmpty()) {
-                registerInBackground();
-            }
         }
     }
 
@@ -93,11 +89,11 @@ public class GcmManager {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
-        return mActivity.getSharedPreferences(mActivity.getClass().getSimpleName(),
-                Context.MODE_PRIVATE);
+        return (mActivity).getSharedPreferences(( mActivity).getClass()
+                        .getSimpleName(), Context.MODE_PRIVATE);
     }
 
-    private void registerInBackground() {
+    public void registerInBackground(final GcmRegistrationReceiver receiver) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
@@ -110,6 +106,8 @@ public class GcmManager {
                     msg ="Device registered, registration ID=" + mRegId;
                     sendRegistrationIdToBackend();
                     storeRegistrationId(mRegId);
+                    Log.d(TAG, msg);
+                    receiver.receivedRegistrationId(mRegId);
                 } catch (IOException e) {
                     msg = "Error: " + e.getMessage();
                 }

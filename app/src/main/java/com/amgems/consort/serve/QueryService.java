@@ -17,7 +17,7 @@ import retrofit.converter.GsonConverter;
  * @version 0.1, 11/8/14.
  */
 public class QueryService {
-    private static final String DEFAULT_SERVER_URL = "http://attu4.cs.washington.edu:33333";
+    private static final String DEFAULT_SERVER_URL = "http://192.168.8.145:33333";
     private static Requestor requestor;
 
     public QueryService() {
