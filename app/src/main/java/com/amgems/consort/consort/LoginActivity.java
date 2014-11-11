@@ -46,7 +46,7 @@ public class LoginActivity extends ActionBarActivity  {
 
             @Override
             public void onError(String errorMsg) {
-                Toast.makeText(LoginActivity.this, "Failed to register with GCM: " + errorMsg, Toast.LENGTH_SHORT);
+                Toast.makeText(LoginActivity.this, "Failed to register with GCM: " + errorMsg, Toast.LENGTH_SHORT).show();
             }
         });
 
