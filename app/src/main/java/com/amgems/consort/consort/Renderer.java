@@ -1,5 +1,6 @@
 package com.amgems.consort.consort;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,6 +33,9 @@ public class Renderer {
 
             canvas.drawRGB(66, 66, 66);
 
+            Bitmap foregroundBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas foregroundLayer = new Canvas(foregroundBitmap);
+
             for (Node node : game.getMapping().graph) {
                 if (node.isVisible()) {
                     Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -58,15 +62,16 @@ public class Renderer {
                     }
 
                     float length = nodeName.length() * 15;
-                    canvas.drawRect(node.getX(xScale) - length - x,
+                    foregroundLayer.drawRect(node.getX(xScale) - length - x,
                             node.getY(yScale) - 40 - y,
                             node.getX(xScale) + length * 2 - x,
                             node.getY(yScale) + 10 - y,
                             circlePaint
                     );
-                    canvas.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
+                    foregroundLayer.drawText(nodeName, node.getX(xScale) - x, node.getY(yScale) - y, textPaint);
                 }
             }
+            canvas.drawBitmap(foregroundBitmap, 0, 0, null);
             holder.unlockCanvasAndPost(canvas);
         }
     }
