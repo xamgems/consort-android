@@ -1,10 +1,8 @@
 package com.amgems.consort.consort;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,14 +38,19 @@ public class LoginActivity extends ActionBarActivity  {
         GcmManager gcmManager = new GcmManager(this);
         gcmManager.registerInBackground(new GcmRegistrationReceiver() {
             @Override
-            public void receivedRegistrationId(String id) {
+            public void onReceivedRegistrationId(String id) {
                 mRegId = id;
                 mUserEditText.setClickable(true);
                 mUserEditText.setVisibility(View.VISIBLE);
             }
+
+            @Override
+            public void onError(String errorMsg) {
+                Toast.makeText(LoginActivity.this, "Failed to register with GCM: " + errorMsg, Toast.LENGTH_SHORT);
+            }
         });
+
         final QueryService service = new QueryService();
-        Log.d(getClass().getSimpleName(), "RegId: " + mRegId);
 
         mUserSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override

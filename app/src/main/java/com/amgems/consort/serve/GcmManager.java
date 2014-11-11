@@ -89,8 +89,8 @@ public class GcmManager {
     private SharedPreferences getGCMPreferences(Context context) {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the regID in your app is up to you.
-        return (mActivity).getSharedPreferences(( mActivity).getClass()
-                        .getSimpleName(), Context.MODE_PRIVATE);
+        return (mActivity).getSharedPreferences((mActivity).getClass()
+                .getSimpleName(), Context.MODE_PRIVATE);
     }
 
     public void registerInBackground(final GcmRegistrationReceiver receiver) {
@@ -103,16 +103,28 @@ public class GcmManager {
                         mGcm = GoogleCloudMessaging.getInstance(mContext);
                     }
                     mRegId = mGcm.register(SENDER_ID);
-                    msg ="Device registered, registration ID=" + mRegId;
                     sendRegistrationIdToBackend();
                     storeRegistrationId(mRegId);
-                    Log.d(TAG, msg);
-                    receiver.receivedRegistrationId(mRegId);
+                    Log.d(TAG, "Device registered, registration ID=" + mRegId);
+                    msg = mRegId;
                 } catch (IOException e) {
-                    msg = "Error: " + e.getMessage();
+                    Log.e(TAG, "Error: " + e.getMessage());
+                    msg = e.getMessage();
+                    cancel(true);
                 }
                 return msg;
             }
+
+            @Override
+            protected void onCancelled(String errorMsg) {
+                receiver.onError(errorMsg);
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                receiver.onReceivedRegistrationId(mRegId);
+            }
+
         }.execute(null, null, null);
     }
 
